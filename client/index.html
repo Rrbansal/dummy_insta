@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: aquamarine;">
+    <div style="display:flex;justify-content: center">
+    <div>
+    <h1>My First Backened Project</h1>
+    <img style="height:100px;width:100px" src="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg" alt="profile_img">
+    <h1 id="username">Riya</h1>
+    <p id="userbio">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam, ipsa.</p>
+    <p id="useremail">email:getting</p>
+    </div>
+</div>
+</body>
+<script>
+    const userData = async() =>{
+        try {
+            const resp = await fetch("http://localhost:8081",{
+                method:"GET",
+                credentials:"include"
+            });
+         if(resp.status!==200){
+         window.location.href="http://localhost:5500/client/login.html"}
+         const {data} = await resp.json();
+         const userName = document.getElementById("username")
+         const userEmail = document.getElementById("useremail")
+         const userBio = document.getElementById("userbio")
+         userName.innerText=data.username;
+         userEmail.innerText=data.email;
+         userBio.innerText=data.bio         
+        } catch (e) {
+             console.log(e.message)
+             window.location.href="http://localhost:5500/client/login.html"
+        }
+     } 
+ 
+     userData()
+
+</script>
+</html>

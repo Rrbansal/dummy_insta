@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: aquamarine;">
+    <h1 style="text-align: center;">instagram registration form</h1>
+ <div style="display:flex;justify-content: center">
+    <form>
+        <label for="name">name:</label>
+        <input type="text" name="username" id="name" placeholder="enter your name">
+        <br>
+        <label for="username">username:</label>
+        <input type="text" name="username" id="username" placeholder="enter your username">
+        <br>
+        <label for="email">email:</label>
+        <input type="email" name="email" id="email" placeholder="enter your email">
+        <br>
+        <label for="bio">bio:</label>
+        <input type="text" name="bio" id="bio" placeholder="enter your bio">
+        <br>
+        <label for="password">password:</label>
+        <input type="password" name="password" id="password" placeholder="enter your password">
+        <br>
+        <br><br>
+        <button type="submit" id="submitform">signup</button>
+    </form>
+</div>
+
+</body>
+<script>
+
+    const formSubmit = document.getElementById("submitform");
+    formSubmit.addEventListener("click",(event)=>{
+        event.preventDefault()
+        const userName=document.getElementById("username").value
+        const userEmail=document.getElementById("email").value
+        const userPassword=document.getElementById("password").value
+        const nameOfUser = document.getElementById("name").value
+        const userBio = document.getElementById("bio").value
+
+        if(!userName || !userEmail  || !userPassword  || !nameOfUser || !userBio) {  
+            alert("All input fields are required")
+            return 
+        }
+       
+        const userData = {
+            name:nameOfUser,
+            email:userEmail,
+            bio:userBio,
+            password:userPassword,
+            username:userName
+        }
+
+        registerUser(userData)
+        
+
+    })
+
+    const registerUser =async(payload)=>{
+      
+        try {
+        const resp = await fetch("http://localhost:8081/signup",{
+            method:"POST",
+            headers:{"content-type":"application/json"},
+            body:JSON.stringify(payload)
+        })
+
+        const data = await resp.json();
+        console.log(data)
+        window.location.href="http://localhost:5500/client/login.html"
+        
+       } catch (e) {
+            console.log(e.message)
+       }
+    }
+
+    
+</script>
+    
+</html>
